@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const validateProducts_1 = require("./middlewares/validateProducts");
+const productControllers_1 = require("./controllers/productControllers");
+const sameValidations_1 = require("../middlewares/sameValidations");
+const router = (0, express_1.Router)();
+router.get("/", validateProducts_1.validateProductQuery, productControllers_1.productsController);
+router.get("/len/global", validateProducts_1.verifyQueryProductLen, productControllers_1.lenProductsController);
+router.get("/cat/:category", validateProducts_1.validateProdCatParam, productControllers_1.productsCatController);
+router.get("/author/:author", validateProducts_1.validateProdAuthorParam, productControllers_1.productsAuthorController);
+router.get("/:id", validateProducts_1.validateProdIdParam, productControllers_1.productIdController);
+router.post("/", sameValidations_1.isBody, validateProducts_1.verifyProductToAdd, productControllers_1.productAddController);
+router.delete("/", sameValidations_1.hasTokenByCookie, validateProducts_1.verifyProductToDelete, productControllers_1.productDeleteController);
+router.put("/:id", sameValidations_1.isBody, validateProducts_1.verifyProductToUpdate, productControllers_1.productUpdateConstroller);
+exports.default = router;
