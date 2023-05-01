@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Product } from "../../interface/Product";
-import Env from "@/constants/Env";
+import { Env } from "@/constants/Env";
 
 export const productsApi: any = createApi({
   reducerPath: "productsApi",

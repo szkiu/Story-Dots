@@ -12,7 +12,7 @@ function Header({ noSticky }: { noSticky?: boolean }) {
       <nav className="flex gap-4 items-center">
         <ul className="flex items-center gap-4">
           {categories.map((el: string) => (
-            <Link href={el.toLocaleLowerCase()} key={el}>
+            <Link className="transition-transform duration-300 hover:scale-105" href={el.toLocaleLowerCase()} key={el}>
               <li>{el}</li>
             </Link>
           ))}

@@ -164,8 +164,6 @@ export const productUpdateConstroller = async (req: Request, res: Response) => {
     const { body } = req;
     const { refreshToken } = req.cookies;
 
-    console.log("first")
-
     const id = decodeRefresh(refreshToken);
 
     if (!id) throw new Error("You need to login to create a product");

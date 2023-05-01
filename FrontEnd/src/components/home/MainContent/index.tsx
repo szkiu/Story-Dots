@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 import { useGetProductsQuery } from "../../../redux/services/products";
 import reverseFunction from "@/utilities/reverseFunction";
 import { Product } from "../../../interface/Product";
-import { baseUrl } from "@/constants/Env";
+import { Env } from "@/constants/Env";
 
 function MainContent() {
   const [page, setPage] = useState(0);
@@ -22,7 +22,7 @@ function MainContent() {
   });
 
   useEffect(() => {
-    fetch(`${baseUrl}/api/v1/products/len/global`)
+    fetch(`${Env.baseUrlProduct}/len/global`)
       .then((res) => res.json())
       .then((res) => {
         const newLen = res.len / 5;
@@ -38,8 +38,6 @@ function MainContent() {
       if (len > realPage) setPage(realPage);
     }
   }, [inView]); //eslint-disable-line
-
-  console.log(data)
 
   return (
     <section className="flex flex-col gap-[4rem]">

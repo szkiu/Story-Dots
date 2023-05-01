@@ -44,32 +44,34 @@ function ButtonsProduct({ author_id, id }: { author_id: string; id: string }) {
           <div className="flex gap-3">
             <Link
               href={`/user/${id}`}
-              className="w-fit h-fit py-1 px-3 border-2 font-medium text-[#477cc2] border-[#477cc2]"
+              className="w-fit h-fit py-1 px-3 border-2 font-medium text-[#477cc2] border-[#477cc2]
+              transition-colors duration-300 hover:bg-[#477cc2] hover:text-white"
             >
               Read More
             </Link>
 
             <Link
               href={`/update_product/${id}`}
-              className="w-fit h-fit py-1 px-3 border-2 font-medium text-white bg-yellow-400 border-yellow-400"
+              className="w-fit h-fit py-1 px-3 border-2 font-medium text-white bg-yellow-400 border-yellow-400 transition-colors duration-300 hover:border-yellow-400 hover:text-yellow-400 hover:bg-transparent"
             >
               Update
             </Link>
 
             <button
               onClick={() => deleteProduct({ authorId: author_id, id })}
-              className="bg-red-500 border-2 border-red-500 text-white px-2 text-xl font-bold"
+              className="bg-red-500 border-2 border-red-500 text-white px-2 text-xl font-bold transition-all duration-300 hover:rounded-3xl"
             >
               <BiTrash />
             </button>
           </div>
         ) : (
           <Link
-            href={`/user/${id}`}
-            className="w-fit h-fit py-1 px-3 border-2 font-medium text-[#477cc2] border-[#477cc2]"
-          >
-            Read More
-          </Link>
+              href={`/user/${id}`}
+              className="w-fit h-fit py-1 px-3 border-2 font-medium text-[#477cc2] border-[#477cc2]
+              transition-colors duration-300 hover:bg-[#477cc2] hover:text-white"
+            >
+              Read More
+            </Link>
         )}
       </div>
 

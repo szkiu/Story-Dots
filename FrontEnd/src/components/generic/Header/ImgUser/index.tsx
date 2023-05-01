@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   useGetMeQuery,
@@ -9,6 +9,7 @@ import { BiLogOut, BiTrash, BiHeart } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/slices/user.slice";
 import Unknown from "../../../../assets/unknown-user.png";
+import { Env } from "@/constants/Env";
 
 function ImgUser() {
   const dispatch = useDispatch();
@@ -16,18 +17,50 @@ function ImgUser() {
   const { data: user, isFetching, error } = useGetMeQuery();
   const [showOptions, setShowOptions] = useState(false);
   const [show, setShow] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    function handleClickOutside(event: any) {
+      if (!modalRef.current) return;
+
+      if (
+        !modalRef.current.contains(event?.target) &&
+        !(
+          event?.target === buttonRef.current ||
+          event?.target.closest(
+            event?.target?.parentElement?.id
+              ? `#${event?.target?.parentElement?.id}`
+              : null
+          )
+        )
+      ) {
+        setShowOptions(false);
+      }
+    }
+
+    document.addEventListener("click", (event) => {
+      handleClickOutside(event);
+    });
+
+    return () => {
+      document.removeEventListener("click", (event) => {
+        handleClickOutside(event);
+      });
+    };
+
     if (window) setShow(true);
   }, []);
 
   useEffect(() => {
     if (!user) return;
 
-    dispatch(setUser({
-      id: user._id,
-      ...user
-    }));
+    dispatch(
+      setUser({
+        id: user._id,
+        ...user,
+      })
+    );
   }, [user]); //eslint-disable-line
 
   return (
@@ -68,7 +101,12 @@ function ImgUser() {
         </>
       ) : (
         <div className="relative">
-          <button className="" onClick={() => setShowOptions(!showOptions)}>
+          <button
+            ref={buttonRef}
+            id="button-header-to-show-options"
+            className="transition-transform duration-300 hover:scale-110"
+            onClick={(e) => setShowOptions(!showOptions)}
+          >
             <img
               className="rounded-full w-[2.5rem] h-[2.5rem]"
               src={user?.image ? user.image : Unknown.src}
@@ -77,7 +115,10 @@ function ImgUser() {
           </button>
 
           {showOptions ? (
-            <div className="absolute left-[50%] -translate-x-[50%] bg-[#4fa7b6] rounded-xl shadow-lg shadow-black/20 py-2 w-max px-4">
+            <div
+              ref={modalRef}
+              className="absolute left-[50%] -translate-x-[50%] bg-[#4fa7b6] rounded-xl shadow-lg shadow-black/20 py-2 w-max px-4"
+            >
               <div className="flex flex-col items-center gap-2">
                 <h3 className="font-semibold text-xl text-amber-300">
                   <span className="text-white">Hello</span> {user.username}
@@ -97,7 +138,7 @@ function ImgUser() {
                   className="font-semibold text-white text-[15px] flex items-center justify-center gap-2 py-0.5 transition-colors hover:bg-[#4e767c]"
                   onClick={async () => {
                     await fetch(
-                      "https://challenge_sd-1-e5045299.deta.app/api/v1/auth/logout",
+                      `${Env.baseUrlAuth}/logout`,
                       {
                         credentials: "include",
                         mode: "cors",
@@ -111,10 +152,10 @@ function ImgUser() {
                 </button>
 
                 <button
-                  className="font-semibold text-white text-[15px] flex items-center justify-center gap-2 transition-colors hover:bg-[#4e767c] py-0.5 rounded-b-lg"
+                  className="font-semibold text-white text-[15px] flex items-center justify-center gap-2 transition-colors hover:bg-[#4e767c] py-0.5"
                   onClick={async () => {
                     await fetch(
-                      "https://challenge_sd-1-e5045299.deta.app/api/v1/auth/user",
+                      `${Env.baseUrlAuth}/user`,
                       {
                         credentials: "include",
                         mode: "cors",

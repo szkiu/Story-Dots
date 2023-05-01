@@ -8,7 +8,7 @@ import { useGetProductsByAuthorMutation } from "@/redux/services/products";
 import reverseFunction from "@/utilities/reverseFunction";
 import { Product } from "@/interface/Product";
 import { useSelector } from "react-redux";
-import { baseUrl } from "@/constants/Env";
+import { baseUrl, Env } from "@/constants/Env";
 
 function User() {
   const user = useSelector((state: any) => state.user);
@@ -21,7 +21,7 @@ function User() {
   });
 
   useEffect(() => {
-    fetch(`${baseUrl}/api/v1/products/len/global?author=${user.username}`)
+    fetch(`${Env.baseUrlProduct}/len/global?author=${user.username}`)
       .then((res) => res.json())
       .then((res) => {
         const newLen = res.lenAuthor / 5;
@@ -46,8 +46,6 @@ function User() {
       if (len > realPage) setPage(realPage);
     }
   }, [inView]); //eslint-disable-line
-
-  console.log(page, len)
 
   return (
     <>

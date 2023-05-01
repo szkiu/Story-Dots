@@ -1,12 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { User } from "../../interface/User";
-import Env from "@/constants/Env";
+import { Env } from "@/constants/Env";
 
 export const accountApi: any = createApi({
   reducerPath: "accountApi",
-
-  // https://challenge_sd-1-e5045299.deta.app/api/v1/auth/
-  // http://localhost:5050/api/v1/auth/
 
   baseQuery: fetchBaseQuery({
     baseUrl: Env.baseUrlAuth,

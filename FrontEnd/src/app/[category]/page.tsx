@@ -7,7 +7,7 @@ import { useInView } from "react-intersection-observer";
 import { useGetProductsByCatQuery } from "@/redux/services/products";
 import reverseFunction from "@/utilities/reverseFunction";
 import { Product } from "@/interface/Product";
-import { baseUrl } from "@/constants/Env";
+import {  Env } from "@/constants/Env";
 
 function Category({ params: { category } }: { params: { category: string } }) {
   const [page, setPage] = useState(5);
@@ -27,7 +27,7 @@ function Category({ params: { category } }: { params: { category: string } }) {
   });
 
   useEffect(() => {
-    fetch(`${baseUrl}/api/v1/products/len/global?cat=${category}`)
+    fetch(`${Env.baseUrlProduct}/len/global?cat=${category}`)
       .then((res) => res.json())
       .then((res) => {
         const newLen = res.lenAuthor / 5;
@@ -43,8 +43,6 @@ function Category({ params: { category } }: { params: { category: string } }) {
       if (len > realPage) setPage(realPage);
     }
   }, [inView]); //eslint-disable-line
-
-  console.log(data);
 
   return (
     <>

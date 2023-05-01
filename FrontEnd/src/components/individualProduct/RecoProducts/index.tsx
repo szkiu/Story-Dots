@@ -9,29 +9,36 @@ function RecoProducts({ catProducts }: { catProducts?: Product[] }) {
         Other post you may like
       </h3>
 
-      <div id="recomended-products" className="h-[26rem] grid gap-12 overflow-y-scroll">
-        {catProducts?.map((prod: Product, i: number) => {
-          return (
-            <div key={prod.id} className="grid gap-3">
-              <div className="relative h-[12rem] w-full">
-                <img
-                  className="h-[12rem] w-full"
-                  src={prod.image_url}
-                  alt={prod.name}
-                />
+      <div
+        id="recomended-products"
+        className="h-[26rem] grid gap-12 overflow-y-scroll"
+      >
+        {catProducts?.length !== 0 ? (
+          catProducts?.map((prod: Product, i: number) => {
+            return (
+              <div key={prod.id} className="grid gap-3">
+                <div className="relative h-[12rem] w-full">
+                  <img
+                    className="h-[12rem] w-full"
+                    src={prod.image_url}
+                    alt={prod.name}
+                  />
+                </div>
+
+                <h3 className="font-bold text-lg text-zinc-700">{prod.name}</h3>
+
+                <Link
+                  href={`/user/${prod.id}`}
+                  className="w-fit h-fit py-0.5 px-1.5 border-2 font-medium text-[#477cc2] border-[#477cc2]"
+                >
+                  Read More
+                </Link>
               </div>
-
-              <h3 className="font-bold text-lg text-zinc-700">{prod.name}</h3>
-
-              <Link
-                href={`/user/${prod.id}`}
-                className="w-fit h-fit py-0.5 px-1.5 border-2 font-medium text-[#477cc2] border-[#477cc2]"
-              >
-                Read More
-              </Link>
-            </div>
-          );
-        })}
+            );
+          })
+        ) : (
+          <p>No products to show</p>
+        )}
       </div>
     </aside>
   );
