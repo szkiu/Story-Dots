@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  min-height: 100vh;
+}
+
 .cursive {
   font-family: cursive;
 }
@@ -38,4 +42,11 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+@media screen and (min-width: 1600px) and (max-width: 1920px) {
+  body{
+    zoom: 140%;
+    min-height: 71.4vh;
+  }
 }

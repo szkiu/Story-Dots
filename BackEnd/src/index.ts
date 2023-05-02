@@ -17,6 +17,7 @@ const whiteList = [
   process.env.ORIGIN_2,
   "http://localhost:5050",
   "http://localhost:3000",
+  "https://story-dots-hoc2.vercel.app"
 ];
 
 app.use(cookieParser());

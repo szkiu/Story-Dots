@@ -161,7 +161,6 @@ const productUpdateConstroller = (req, res) => __awaiter(void 0, void 0, void 0,
         const { id: idParams } = req.params;
         const { body } = req;
         const { refreshToken } = req.cookies;
-        console.log("first");
         const id = (0, utilitiesUser_1.decodeRefresh)(refreshToken);
         if (!id)
             throw new Error("You need to login to create a product");

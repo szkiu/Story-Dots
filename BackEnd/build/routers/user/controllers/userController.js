@@ -23,6 +23,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteUserController = exports.putUpdateUserController = exports.postLoginController = exports.postRegisterController = exports.getUserById = exports.getLogoutController = exports.getMeController = void 0;
 const User_1 = require("../../../db/Models/User");
 const utilitiesUser_1 = require("../../../utilities/users/utilitiesUser");
+const utilitiesProduct_1 = require("../../../utilities/products/utilitiesProduct");
 const getMeController = (_req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { token, expiresIn: _expiresIn, error } = (0, utilitiesUser_1.createTokenByRefresh)(res);
@@ -137,6 +138,9 @@ const deleteUserController = (_req, res) => __awaiter(void 0, void 0, void 0, fu
         const uniqueName = yield (0, utilitiesUser_1.findUserById)(id);
         if (!uniqueName)
             throw new Error("The user doesn't exist");
+        const deletedProperties = yield (0, utilitiesProduct_1.deleteManyProductsByUniqueName)(uniqueName);
+        if (!deletedProperties)
+            throw new Error("Properties doesn't deleted yet");
         yield (0, utilitiesUser_1.deleteUserById)(id);
         res.clearCookie("refreshToken", {
             sameSite: "none",

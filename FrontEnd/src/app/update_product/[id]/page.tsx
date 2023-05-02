@@ -176,7 +176,7 @@ function UpdateProduct({ params: { id } }: { params: { id: string } }) {
 
                     <div className="relative">
                       <ReactQuill
-                        className="h-[18rem]"
+                        className="h-[18rem] w-full max-w-2xl"
                         theme="snow"
                         value={valueQuill}
                         onChange={setValueQuill}

@@ -148,7 +148,7 @@ function CreatePost() {
 
                   <div className="relative ">
                     <ReactQuill
-                      className="h-[18rem] w-full"
+                      className="h-[18rem] w-full max-w-2xl"
                       theme="snow"
                       value={valueQuill}
                       onChange={setValueQuill}
@@ -284,8 +284,6 @@ function CreatePost() {
           </p>
         </div>
       ) : null}
-
-      <a href="/" id="home-anchor-create_post" className="hidden" />
     </>
   );
 }

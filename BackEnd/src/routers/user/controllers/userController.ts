@@ -12,6 +12,7 @@ import {
   deleteUserById,
   findUserById,
 } from "../../../utilities/users/utilitiesUser";
+import { deleteManyProductsByUniqueName } from "../../../utilities/products/utilitiesProduct";
 
 export const getMeController = async (_req: Request, res: Response) => {
   try {
@@ -141,6 +142,12 @@ export const deleteUserController = async (_req: Request, res: Response) => {
     const uniqueName = await findUserById(id);
 
     if (!uniqueName) throw new Error("The user doesn't exist");
+
+    const deletedProperties = await deleteManyProductsByUniqueName(
+      uniqueName
+    );
+
+    if (!deletedProperties) throw new Error("Properties doesn't deleted yet");
 
     await deleteUserById(id);
 

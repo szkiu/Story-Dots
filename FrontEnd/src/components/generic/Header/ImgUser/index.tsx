@@ -21,6 +21,8 @@ function ImgUser() {
   const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
+    if (window) setShow(true);
+    
     function handleClickOutside(event: any) {
       if (!modalRef.current) return;
 
@@ -48,8 +50,6 @@ function ImgUser() {
         handleClickOutside(event);
       });
     };
-
-    if (window) setShow(true);
   }, []);
 
   useEffect(() => {
@@ -153,16 +153,14 @@ function ImgUser() {
 
                 <button
                   className="font-semibold text-white text-[15px] flex items-center justify-center gap-2 transition-colors hover:bg-[#4e767c] py-0.5"
-                  onClick={async () => {
-                    await fetch(
-                      `${Env.baseUrlAuth}/user`,
-                      {
-                        credentials: "include",
-                        mode: "cors",
-                        method: "DELETE",
-                      }
+                  onClick={() => {
+                    const alert = document.getElementById("alert-del-acc");
+
+                    alert?.classList.replace(
+                      "-translate-y-[5000%]",
+                      "-translate-y-[50%]"
                     );
-                    location.reload();
+                    alert?.classList.replace("opacity-0", "opacity-1");
                   }}
                 >
                   Delete Account
