@@ -1,11 +1,10 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import ShowProducts from "../ShowProducts";
 import { useInView } from "react-intersection-observer";
 import { useGetProductsQuery } from "../../../redux/services/products";
-import reverseFunction from "@/utilities/reverseFunction";
 import { Product } from "../../../interface/Product";
 import { Env } from "@/constants/Env";
+import ShowErrAndLoadIfNecessary from "@/components/generic/ShowErrAndLoadIfNecessary";
 
 function MainContent() {
   const [page, setPage] = useState(0);
@@ -40,45 +39,17 @@ function MainContent() {
   }, [inView]); //eslint-disable-line
 
   return (
-    <section className="flex flex-col gap-[4rem]">
-      {data ? (
-        <>
-          {data.map(
-            (
-              {
-                description,
-                author,
-                category,
-                _id,
-                image_url,
-                time,
-                name,
-                authorId,
-                price,
-              }: Product,
-              i: number
-            ) => {
-              return (
-                <ShowProducts
-                  author_id={authorId}
-                  description={description}
-                  name={name}
-                  image_url={image_url}
-                  time={time}
-                  author={author}
-                  category={category}
-                  price={price}
-                  isPair={i % 2 === 0}
-                  id={_id ? _id : ""}
-                  key={`${_id}-MainContent`}
-                />
-              );
-            }
-          )}
-
-          <div ref={ref} />
-        </>
-      ) : null}
+    <section
+      className={`flex flex-col gap-[4rem] ${
+        !data ? "justify-center items-center" : ""
+      }`}
+    >
+      <ShowErrAndLoadIfNecessary
+        divRef={ref}
+        data={data}
+        isFetching={isFetching}
+        error={error}
+      />
     </section>
   );
 }

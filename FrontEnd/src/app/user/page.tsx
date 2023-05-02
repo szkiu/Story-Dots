@@ -9,6 +9,7 @@ import reverseFunction from "@/utilities/reverseFunction";
 import { Product } from "@/interface/Product";
 import { useSelector } from "react-redux";
 import { baseUrl, Env } from "@/constants/Env";
+import ShowErrAndLoadIfNecessary from "@/components/generic/ShowErrAndLoadIfNecessary";
 
 function User() {
   const user = useSelector((state: any) => state.user);
@@ -31,7 +32,7 @@ function User() {
   }, [user]);
 
   useEffect(() => {
-    if (!user.username) return
+    if (!user.username) return;
 
     toFetch({
       author: user?.username,
@@ -52,45 +53,18 @@ function User() {
       <Header />
 
       <main className="min-h-[70.3vh] mt-8">
-        <section className="flex flex-col gap-[4rem]">
-          {result.isSuccess ? (
-            <>
-              {result.data.map(
-                (
-                  {
-                    description,
-                    author,
-                    category,
-                    id,
-                    image_url,
-                    time,
-                    name,
-                    authorId,
-                    price,
-                  }: Product,
-                  i: number
-                ) => {
-                  return (
-                    <ShowProducts
-                      author_id={authorId}
-                      description={description}
-                      name={name}
-                      image_url={image_url}
-                      time={time}
-                      author={author}
-                      category={category}
-                      isPair={i % 2 === 0}
-                      id={id}
-                      key={id}
-                      price={price}
-                    />
-                  );
-                }
-              )}
-
-              <div ref={ref} />
-            </>
-          ) : null}
+        <section
+          className={`flex flex-col gap-[4rem] h-[80%] ${
+            !result?.data ? "justify-center items-center" : ""
+          }`}
+        >
+          <ShowErrAndLoadIfNecessary
+            divRef={ref}
+            data={result?.data}
+            isFetching={result?.isFetching}
+            error={result?.isError}
+            title={`No products to show, Create One!`}
+          />
         </section>
 
         <CreatePost />

@@ -1,10 +1,13 @@
 "use client";
 import "./globals.css";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import { store } from "../redux/store";
 import { Provider } from "react-redux";
 import Env from "@/constants/Env";
-// import { checkScreenWidth } from "../utilities/checkScreenWidth";
+// import {
+//   checkScreenWidth,
+//   checkScreenWidthAddingClasses,
+// } from "../utilities/checkScreenWidth";
 import Footer from "@/components/generic/Footer";
 import AlertDelAcc from "../components/generic/AlertDeleteAcc";
 
@@ -13,6 +16,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // const [loadMediaQuery, setLoadMediaQuery] = useState("");
+
+  // useEffect(() => {
+  //   if (!window) return;
+
+  //   setLoadMediaQuery(checkScreenWidth());
+
+  //   window.addEventListener("resize", checkScreenWidthAddingClasses);
+  // }, []);
+
+  // ${loadMediaQuery}
+
   return (
     <html lang="en">
       <head />
@@ -25,7 +40,11 @@ export default function RootLayout({
           <AlertDelAcc />
         </Provider>
 
-        <a href="/" id="home-anchor-create_post" className="hidden" />
+        <a
+          href="/"
+          id="home-anchor-create_post"
+          className="hidden min-h-[71.4vh]"
+        />
       </body>
     </html>
   );

@@ -1,13 +1,12 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Header from "@/components/generic/Header";
+import ShowErrAndLoadIfNecessary from "@/components/generic/ShowErrAndLoadIfNecessary";
 import CreatePost from "../../components/generic/CreatePost";
-import ShowProducts from "@/components/home/ShowProducts";
 import { useInView } from "react-intersection-observer";
 import { useGetProductsByCatQuery } from "@/redux/services/products";
-import reverseFunction from "@/utilities/reverseFunction";
 import { Product } from "@/interface/Product";
-import {  Env } from "@/constants/Env";
+import { Env } from "@/constants/Env";
 
 function Category({ params: { category } }: { params: { category: string } }) {
   const [page, setPage] = useState(5);
@@ -49,45 +48,18 @@ function Category({ params: { category } }: { params: { category: string } }) {
       <Header />
 
       <main className="min-h-[70.3vh] mt-8">
-        <section className="flex flex-col gap-[4rem]">
-          {data ? (
-            <>
-              {data.map(
-                (
-                  {
-                    description,
-                    author,
-                    category,
-                    _id,
-                    image_url,
-                    time,
-                    name,
-                    authorId,
-                    price,
-                  }: Product,
-                  i: number
-                ) => {
-                  return (
-                    <ShowProducts
-                      author_id={authorId}
-                      description={description}
-                      name={name}
-                      image_url={image_url}
-                      time={time}
-                      author={author}
-                      category={category}
-                      price={price}
-                      isPair={i % 2 === 0}
-                      id={_id ? _id : ""}
-                      key={`${_id}-category`}
-                    />
-                  );
-                }
-              )}
-
-              <div ref={ref} />
-            </>
-          ) : null}
+        <section
+          className={`flex flex-col gap-[4rem] h-[80%] ${
+            !data ? "justify-center items-center" : ""
+          }`}
+        >
+          <ShowErrAndLoadIfNecessary
+            divRef={ref}
+            data={data}
+            isFetching={isFetching}
+            error={error}
+            title={`No products to show, Create One with the ${category} category!`}
+          />
         </section>
 
         <CreatePost />
